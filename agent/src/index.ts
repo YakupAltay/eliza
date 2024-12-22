@@ -33,6 +33,7 @@ import createGoatPlugin from "@elizaos/plugin-goat";
 // import { intifacePlugin } from "@elizaos/plugin-intiface";
 import { DirectClient } from "@elizaos/client-direct";
 import { aptosPlugin } from "@elizaos/plugin-aptos";
+import { celestiaPlugin } from "@elizaos/plugin-celestia";
 import {
     advancedTradePlugin,
     coinbaseCommercePlugin,
@@ -504,6 +505,9 @@ export async function createAgent(
         // character.plugins are handled when clients are added
         plugins: [
             bootstrapPlugin,
+            getSecret(character, "CELESTIA_LIGHT_NODE_RPC_URL") &&
+            getSecret(character, "CELESTIA_AI_AGENT_NAMESPACE") &&
+            getSecret(character, "CELESTIA_DEFAULT_TX_FEE") ? celestiaPlugin : null,
             getSecret(character, "CONFLUX_CORE_PRIVATE_KEY")
                 ? confluxPlugin
                 : null,
